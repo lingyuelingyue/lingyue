@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>郭娜 - 云计算 / AI 数据工程 | 个人简历</title>
+    <style>
+        :root {
+            --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+            --color-primary: #7C3AED;
+            --color-primary-dark: #6D28D9;
+            --color-primary-light: #A78BFA;
+            --color-primary-glow: rgba(124, 58, 237, 0.45);
+            --color-accent: #F59E0B;
+            --color-accent-glow: rgba(245, 158, 11, 0.45);
+            --color-bg: #0A0A14;
+            --color-surface: rgba(18, 16, 30, 0.75);
+            --color-text: #EDE9FE;
+            --color-text-secondary: #C4B5FD;
+            --color-text-tertiary: #8B82A8;
+            --color-border: rgba(167, 139, 250, 0.18);
+            --color-border-glow: rgba(167, 139, 250, 0.35);
+            --color-shadow-md: 0 6px 20px rgba(0, 0, 0, 0.40);
+            --color-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+            --color-shadow-glow: 0 0 20px rgba(124, 58, 237, 0.3);
+            --color-nav-bg: rgba(10, 10, 20, 0.72);
+            --radius-sm: 10px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 320ms cubic-bezier(0.4, 0, 0.2, 1);
+            --max-width: 1160px;
+            --nav-height: 64px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(var(--nav-height) + 30px);
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+        body {
+            font-family: var(--font-sans);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.65;
+            min-height: 100vh;
+            padding-top: var(--nav-height);
+            position: relative;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse at 20% 0%, rgba(124, 58, 237, 0.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 100%, rgba(245, 158, 11, 0.08) 0%, transparent 55%);
+        }
+
+        #particleCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            z-index: 1002;
+            background: linear-gradient(90deg, var(--color-primary-light), var(--color-accent), var(--color-primary));
+            box-shadow: 0 0 14px var(--color-primary-glow);
+            transition: width 60ms linear;
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: var(--nav-height);
+            background: var(--color-nav-bg);
+            backdrop-filter: blur(28px) saturate(1.8);
+            -webkit-backdrop-filter: blur(28px) saturate(1.8);
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .nav-bar.scrolled {
+            border-bottom-color: var(--color-border-glow);
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.5), 0 0 18px var(--color-primary-glow);
+        }
+        .nav-inner {
+            width: 100%;
+            max-width: var(--max-width);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .nav-brand {
+            font-weight: 750;
+            font-size: 1.25rem;
+            background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            filter: drop-shadow(0 0 8px var(--color-primary-glow));
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            list-style: none;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scrollbar-width: none;
+            mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+        }
+        .nav-links a {
+            padding: 9px 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-full);
+            white-space: nowrap;
+            transition: all var(--transition-fast);
+        }
+        .nav-links a:hover {
+            color: #fff;
+            background: rgba(124, 58, 237, 0.15);
+            box-shadow: 0 0 12px rgba(124, 58, 237, 0.3);
+        }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--color-border);
+            background: rgba(18, 16, 30, 0.65);
+            backdrop-filter: blur(16px);
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        .btn-icon:hover {
+            border-color: var(--color-primary-light);
+            color: #fff;
+            box-shadow: 0 0 20px var(--color-primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+        .section {
+            padding: 60px 0;
+            scroll-margin-top: calc(var(--nav-height) + 24px);
+        }
+        .section-title {
+            font-size: clamp(1.6rem, 4vw, 2rem);
+            font-weight: 750;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 6px;
+        }
+        .section-title .title-accent {
+            width: 44px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary-light), var(--color-accent));
+            border-radius: 2px;
+            box-shadow: 0 0 12px var(--color-primary-glow);
+        }
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--color-text-tertiary);
+            margin-bottom: 36px;
+            margin-left: 58px;
+        }
+
+        /* 滚动动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.75s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.75s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.75s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.75s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .reveal-left.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.88);
+            transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .reveal-scale.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .reveal-delay-1 { transition-delay: 0.08s; }
+        .reveal-delay-2 { transition-delay: 0.16s; }
+        .reveal-delay-3 { transition-delay: 0.24s; }
+        .reveal-delay-4 { transition-delay: 0.32s; }
+
+        /* Hero */
+        .hero-section {
+            padding: 70px 0 56px;
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+        }
+        .hero-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: heroGlowPulse 8s ease-in-out infinite;
+        }
+        .hero-glow.g1 {
+            width: 450px; height: 450px; top: -120px; right: -80px; background: rgba(124, 58, 237, 0.18);
+        }
+        .hero-glow.g2 {
+            width: 350px; height: 350px; bottom: -80px; left: -60px; background: rgba(245, 158, 11, 0.13); animation-delay: -4s;
+        }
+        @keyframes heroGlowPulse {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+            50% { transform: translate(30px, -30px) scale(1.2); opacity: 0.9; }
+        }
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .hero-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--color-primary-light);
+            box-shadow: 0 0 35px var(--color-primary-glow);
+            flex-shrink: 0;
+            transition: all var(--transition-normal);
+        }
+        .hero-avatar:hover {
+            transform: scale(1.06);
+            box-shadow: 0 0 55px rgba(124, 58, 237, 0.7);
+        }
+        .hero-text { flex: 1; }
+        .hero-badge {
+            display: inline-block;
+            padding: 7px 16px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            border-radius: var(--radius-full);
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--color-primary-light);
+            border: 1px solid rgba(124, 58, 237, 0.25);
+            letter-spacing: 0.05em;
+            margin-bottom: 18px;
+            backdrop-filter: blur(8px);
+        }
+        .hero-name {
+            font-size: clamp(2.5rem, 6vw, 3.6rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #E9D5FF 0%, #C4B5FD 40%, #FCD34D 70%, #EDE9FE 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 100%;
+            animation: shimmerHero 5s ease-in-out infinite;
+            filter: drop-shadow(0 0 18px rgba(124, 58, 237, 0.4));
+            margin-bottom: 10px;
+            line-height: 1.05;
+        }
+        @keyframes shimmerHero {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .hero-role {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--color-primary-light);
+            margin-bottom: 20px;
+            min-height: 1.6em;
+        }
+        .hero-bio {
+            font-size: 0.96rem;
+            color: var(--color-text-secondary);
+            max-width: 620px;
+            margin-bottom: 24px;
+        }
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 26px;
+        }
+        .hero-tag {
+            padding: 8px 18px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border-radius: var(--radius-full);
+            background: rgba(124, 58, 237, 0.08);
+            backdrop-filter: blur(12px);
+            color: var(--color-text-secondary);
+            border: 1px solid var(--color-border);
+            transition: all var(--transition-fast);
+        }
+        .hero-tag:hover {
+            border-color: var(--color-primary-light);
+            color: #fff;
+            box-shadow: 0 0 18px var(--color-primary-glow);
+            transform: translateY(-2px);
+        }
+        .hero-tag.accent {
+            border-color: rgba(245, 158, 11, 0.3);
+            color: #FCD34D;
+            background: rgba(245, 158, 11, 0.08);
+        }
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 26px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            border: none;
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #7C3AED, #6D28D9);
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(124, 58, 237, 0.4);
+        }
+        .btn-outline {
+            background: rgba(18, 16, 30, 0.6);
+            backdrop-filter: blur(14px);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+        .btn-outline:hover {
+            border-color: var(--color-primary-light);
+            box-shadow: 0 0 22px var(--color-primary-glow);
+            transform: translateY(-3px);
+        }
+
+        /* 亮点卡片 */
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+        .highlight-card {
+            background: var(--color-surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+            box-shadow: var(--color-shadow-md);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        .highlight-card:hover {
+            box-shadow: var(--color-shadow-lg), 0 0 30px var(--color-primary-glow);
+            transform: translateY(-6px);
+        }
+        .hl-number {
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hl-label { color: var(--color-text-secondary); }
+
+        /* Tabs 项目与培训经历 */
+        .tabs-container {
+            background: var(--color-surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--color-shadow-md);
+            overflow: hidden;
+        }
+        .tabs-nav {
+            display: flex;
+            border-bottom: 1px solid var(--color-border);
+            background: rgba(18, 16, 30, 0.4);
+            overflow-x: auto;
+            position: relative;
+        }
+        .tab-indicator {
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary-light), var(--color-accent));
+            transition: left var(--transition-normal), width var(--transition-normal);
+            box-shadow: 0 0 14px var(--color-primary-glow);
+            z-index: 2;
+        }
+        .tabs-nav button {
+            padding: 16px 24px;
+            font-size: 0.88rem;
+            font-weight: 580;
+            border: none;
+            background: transparent;
+            color: var(--color-text-tertiary);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -1px;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+            z-index: 1;
+        }
+        .tabs-nav button:hover { color: #fff; background: rgba(124, 58, 237, 0.08); }
+        .tabs-nav button[aria-selected="true"] { color: #fff; border-bottom-color: transparent; text-shadow: 0 0 8px var(--color-primary-glow); }
+        .tabs-panel { display: none; padding: 30px 26px; animation: fadeSlideIn 380ms ease; }
+        .tabs-panel[aria-hidden="false"] { display: block; }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 项目卡片 */
+        .project-card {
+            background: rgba(18, 16, 30, 0.55);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 24px 26px;
+            margin-bottom: 16px;
+            box-shadow: var(--color-shadow-md);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card:last-child { margin-bottom: 0; }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-md);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(124, 58, 237, 0.18) 0%, transparent 60%);
+            z-index: 0;
+        }
+        .project-card:hover::before { opacity: 1; }
+        .project-card:hover {
+            box-shadow: var(--color-shadow-lg), 0 0 24px rgba(124, 58, 237, 0.25);
+            transform: translateY(-4px);
+            border-color: var(--color-primary-light);
+        }
+        .project-card .proj-header,
+        .project-card .proj-role,
+        .project-card ul,
+        .project-card .proj-result,
+        .project-card .tech-badges { position: relative; z-index: 1; }
+        .project-card .proj-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .project-card .proj-name { font-weight: 700; font-size: 1.05rem; color: #fff; }
+        .project-card .proj-date {
+            font-size: 0.76rem;
+            color: var(--color-text-tertiary);
+            background: rgba(124, 58, 237, 0.15);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--color-border);
+        }
+        .project-card .proj-role { font-size: 0.82rem; color: var(--color-primary-light); font-weight: 600; margin-bottom: 14px; }
+        .project-card ul { list-style: none; margin: 0 0 16px; }
+        .project-card ul li {
+            position: relative;
+            padding-left: 22px;
+            font-size: 0.87rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .project-card ul li::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 8px;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--color-primary-light);
+            box-shadow: 0 0 8px var(--color-primary-glow);
+        }
+        .project-card .proj-result {
+            background: rgba(124, 58, 237, 0.08);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            font-size: 0.83rem;
+            color: var(--color-primary-light);
+            font-weight: 600;
+            border-left: 3px solid var(--color-primary);
+            box-shadow: 0 0 12px rgba(124, 58, 237, 0.15);
+        }
+        .tech-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+        .tech-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: var(--radius-full);
+            background: rgba(124, 58, 237, 0.12);
+            color: var(--color-primary-light);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            transition: all var(--transition-fast);
+            font-family: var(--font-mono);
+        }
+        .tech-badge:hover {
+            background: var(--color-primary);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px var(--color-primary-glow);
+        }
+
+        /* 证书图片卡片 */
+        .cert-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+        }
+        .cert-img-card {
+            background: var(--color-surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            box-shadow: var(--color-shadow-md);
+            transition: all var(--transition-normal);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .cert-img-card:hover {
+            box-shadow: var(--color-shadow-lg), 0 0 24px var(--color-primary-glow);
+            transform: translateY(-5px);
+            border-color: var(--color-primary-light);
+        }
+        .cert-img-card img {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+            object-fit: contain;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--color-border);
+            transition: transform var(--transition-fast);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .cert-img-card:hover img { transform: scale(1.06); }
+        .cert-img-card .cert-label {
+            margin-top: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+        }
+
+        /* 技能等其他样式保持 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+        .skill-category {
+            background: var(--color-surface);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 26px;
+            box-shadow: var(--color-shadow-md);
+        }
+        .skill-bar-fill {
+            height: 7px;
+            background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary));
+            border-radius: 4px;
+            width: 0;
+            transition: width 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .eval-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            list-style: none;
+        }
+        .eval-list li {
+            background: rgba(18, 16, 30, 0.6);
+            border: 1px solid var(--color-border);
+            padding: 16px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: var(--radius-md);
+            box-shadow: 0 0 60px var(--color-primary-glow);
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 24px; right: 32px;
+            font-size: 2.5rem;
+            color: #fff;
+            cursor: pointer;
+            opacity: 0.8;
+        }
+        .lightbox-close:hover { opacity: 1; }
+
+        .site-footer {
+            text-align: center;
+            padding: 38px 24px;
+            border-top: 1px solid var(--color-border);
+            color: var(--color-text-tertiary);
+            font-size: 0.78rem;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 34px; right: 34px;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+            z-index: 900;
+        }
+        .back-to-top.visible { opacity: 1; }
+
+        @media (max-width: 768px) {
+            .hero-inner { flex-direction: column; text-align: center; gap: 24px; }
+            .hero-avatar { width: 110px; height: 110px; }
+            .cert-gallery { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas" aria-hidden="true"></canvas>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <nav class="nav-bar" id="navBar">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-brand">郭 娜</a>
+            <div class="nav-links">
+                <a href="#highlights">亮点</a>
+                <a href="#projects">项目</a>
+                <a href="#skills">技能</a>
+                <a href="#certs">证书</a>
+                <a href="#evaluation">评价</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-icon" id="printBtn" title="打印PDF">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 12H4a2 2 0 0 0-2 2v4h16a2 2 0 0 0 2-2v-4h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section" id="hero">
+        <div class="hero-glow g1"></div>
+        <div class="hero-glow g2"></div>
+        <div class="hero-inner">
+            <img src="a.jpg" alt="郭娜的大头照" class="hero-avatar reveal reveal-delay-1">
+            <div class="hero-text">
+                <span class="hero-badge reveal reveal-delay-1">✦ 应届生 · 技术探索者</span>
+                <h1 class="hero-name reveal reveal-delay-1">郭 娜</h1>
+                <p class="hero-role reveal reveal-delay-2" id="heroRole"><span class="typing-cursor" id="typingCursor"></span></p>
+                <p class="hero-bio reveal reveal-delay-2">
+                    即将迈入大学校园的技术探索者。凭借超强自驱力，系统攻克阿里云全栈8大技术领域20+门课程，
+                    取得<strong>全系列Clouder认证</strong>；同时通过国家<strong>人工智能训练师高级工（三级）</strong>认证。
+                </p>
+                <div class="hero-tags reveal reveal-delay-3">
+                    <span class="hero-tag">☁️ 阿里云全栈</span>
+                    <span class="hero-tag">🤖 AI数据工程</span>
+                    <span class="hero-tag accent">🏅 Clouder全系列认证</span>
+                    <span class="hero-tag">📊 数据标注98%+</span>
+                    <span class="hero-tag">🐍 Python/Pandas</span>
+                </div>
+                <div class="hero-cta reveal reveal-delay-3">
+                    <button class="btn btn-primary" id="copyEmailBtn">📋 复制邮箱</button>
+                    <a href="#projects" class="btn btn-outline scroll-to-btn">查看项目 ↓</a>
+                    <a href="#certs" class="btn btn-outline scroll-to-btn">查看证书 ↓</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="main-container">
+        <section class="section" id="highlights">
+            <h2 class="section-title reveal-left"><span class="title-accent"></span>亮点成果</h2>
+            <p class="section-subtitle reveal-left reveal-delay-1">可量化的关键成绩</p>
+            <div class="highlights-grid">
+                <div class="highlight-card reveal-scale reveal-delay-1"><span class="hl-icon">🏅</span><div class="hl-number" data-target="20">0+</div><div class="hl-label">门阿里云场景化课程深度学习，覆盖8大技术领域</div></div>
+                <div class="highlight-card reveal-scale reveal-delay-2"><span class="hl-icon">✅</span><div class="hl-number">全系列</div><div class="hl-label">阿里云Clouder认证全部科目通过</div></div>
+                <div class="highlight-card reveal-scale reveal-delay-3"><span class="hl-icon">🎯</span><div class="hl-number" data-target="98">0%+</div><div class="hl-label">多模态数据标注准确率稳定保持高水平</div></div>
+                <div class="highlight-card reveal-scale reveal-delay-4"><span class="hl-icon">🏆</span><div class="hl-number">双证</div><div class="hl-label">AI训练师初级+高级工，全国联网可查</div></div>
+            </div>
+        </section>
+
+        <section class="section" id="projects">
+            <h2 class="section-title reveal-left"><span class="title-accent"></span>项目与培训经历</h2>
+            <p class="section-subtitle reveal-left reveal-delay-1">自主学习 · 系统攻坚 · 成果导向</p>
+            <div class="tabs-container reveal reveal-delay-2" id="projectsTabs">
+                <div class="tabs-nav">
+                    <div class="tab-indicator" id="tabIndicator"></div>
+                    <button role="tab" aria-selected="true" aria-controls="panel-proj-1">☁️ 阿里云认证攻坚</button>
+                    <button role="tab" aria-selected="false" aria-controls="panel-proj-2">🤖 AI训练师培训</button>
+                    <button role="tab" aria-selected="false" aria-controls="panel-proj-3">🏫 校园经历</button>
+                </div>
+                <div role="tabpanel" id="panel-proj-1" aria-hidden="false" class="tabs-panel">
+                    <div class="project-card">
+                        <div class="proj-header"><span class="proj-name">阿里云全栈技术自学与认证攻坚</span><span class="proj-date">2026.07</span></div>
+                        <span class="proj-role">自主学习者 · 全系列Clouder认证持有者</span>
+                        <ul>
+                            <li>规划并执行系统性云计算学习路线，覆盖弹性计算、云存储、云数据库、云原生、云网络、云安全、大数据、人工智能8大领域</li>
+                            <li>累计完成20+门场景化课程，采用“进阶式学习+场景化实验+实操考核”模式</li>
+                            <li>逐一攻克阿里云Clouder全部认证科目，涵盖ECS、OSS、SAE、SQL数据库、云网络安全等</li>
+                        </ul>
+                        <div class="proj-result">🏆 成果：成为同年龄段中罕见的全系列Clouder认证持有者，技术知识广度达到初级云架构师水平</div>
+                        <div class="tech-badges"><span class="tech-badge">ECS</span><span class="tech-badge">OSS</span><span class="tech-badge">RDS</span><span class="tech-badge">SAE</span><span class="tech-badge">VPC</span><span class="tech-badge">云安全</span></div>
+                    </div>
+                </div>
+                <div role="tabpanel" id="panel-proj-2" aria-hidden="true" class="tabs-panel">
+                    <div class="project-card">
+                        <div class="proj-header"><span class="proj-name">人工智能训练师职业技能系统化培训</span><span class="proj-date">2026.07</span></div>
+                        <span class="proj-role">自主学习者 · 国家职业技能等级证书（三级+五级）</span>
+                        <ul>
+                            <li>完成国家职业技能标准全等级学习，覆盖职业认知、数据采集与处理、数据标注与质量控制、模型训练与算法优化、大模型应用等6大模块</li>
+                            <li>掌握多模态数据处理全链路技能，标注准确率稳定在98%以上</li>
+                            <li>实践模型训练与调优流程：使用Python + Pandas，理解准确率、召回率、F1-Score等指标</li>
+                        </ul>
+                        <div class="proj-result">🏆 成果：具备独立承担AI数据标注项目、辅助模型训练优化的专业能力</div>
+                        <div class="tech-badges"><span class="tech-badge">Python</span><span class="tech-badge">Pandas</span><span class="tech-badge">数据标注</span><span class="tech-badge">模型调优</span></div>
+                    </div>
+                </div>
+                <div role="tabpanel" id="panel-proj-3" aria-hidden="true" class="tabs-panel">
+                    <div class="project-card">
+                        <div class="proj-header"><span class="proj-name">校园经历 · 地理课代表</span><span class="proj-date">2023.09 – 2025.06</span></div>
+                        <span class="proj-role">高一至高二 · 班级组织协调角色</span>
+                        <ul>
+                            <li>担任地理课代表两年，负责作业收发、学习资料整理与师生沟通协调</li>
+                            <li>培养组织协调能力与信息管理能力</li>
+                        </ul>
+                        <div class="proj-result">📋 锻炼了团队协作与信息管理的底层能力，为后续自主学习奠定基础</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="skills">
+            <h2 class="section-title reveal-left"><span class="title-accent"></span>专业技能矩阵</h2>
+            <p class="section-subtitle reveal-left reveal-delay-1">系统化技术能力全景</p>
+            <div class="skills-grid">
+                <div class="skill-category reveal reveal-delay-1">
+                    <div class="skill-cat-title"><span class="cat-icon">☁️</span>云计算平台（阿里云全栈）</div>
+                    <div class="skill-item"><div class="skill-label-row"><span>弹性计算（ECS）</span><span>熟练</span></div><div class="skill-bar"><div class="skill-bar-fill" data-width="88"></div></div></div>
+                    <div class="skill-item"><div class="skill-label-row"><span>云存储（OSS）</span><span>熟练</span></div><div class="skill-bar"><div class="skill-bar-fill" data-width="85"></div></div></div>
+                    <div class="skill-item"><div class="skill-label-row"><span>云数据库（RDS/PolarDB）</span><span>掌握</span></div><div class="skill-bar"><div class="skill-bar-fill" data-width="78"></div></div></div>
+                    <div class="skill-item"><div class="skill-label-row"><span>云原生Serverless（SAE）</span><span>掌握</span></div><div class="skill-bar"><div class="skill-bar-fill" data-width="75"></div></div></div>
+                    <div class="skill-item"><div class="skill-label-row"><span>云网络/云安全</span><span>了解</span></div><div class="skill-bar"><div class="skill-bar-fill" data-width="70"></div></div></div>
+                </div>
+                <div class="skill-category reveal reveal-delay-2">
+                    <div class="skill-cat-title"><span class="cat-icon">🤖</span>AI应用与前沿技术</div>
+                    <div class="skill-tags"><span>大语言模型</span><span>DeepSeek</span><span>通义千问</span><span>Prompt Engineering</span><span>数据标注全链路</span><span>Python</span><span>Pandas</span></div>
+                </div>
+                <div class="skill-category reveal reveal-delay-3">
+                    <div class="skill-cat-title"><span class="cat-icon">📝</span>通用能力</div>
+                    <div class="skill-tags"><span>技术文档撰写</span><span>技术报告输出</span><span>跨团队沟通</span><span>信息管理</span><span>自主学习规划</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="certs">
+            <h2 class="section-title reveal-left"><span class="title-accent"></span>获奖与证书</h2>
+            <p class="section-subtitle reveal-left reveal-delay-1">权威认证 · 点击图片可放大查看</p>
+            <div class="cert-gallery">
+                <div class="cert-img-card reveal-scale reveal-delay-1"><img src="clouder (1).jpg" alt="Clouder认证 1" loading="lazy"><span class="cert-label">Clouder</span></div>
+                <div class="cert-img-card reveal-scale reveal-delay-1"><img src="clouder (2).jpg" alt="Clouder认证 2" loading="lazy"><span class="cert-label">Clouder</span></div>
+                <div class="cert-img-card reveal-scale reveal-delay-2"><img src="clouder (3).jpg" alt="Clouder认证 3" loading="lazy"><span class="cert-label">Clouder</span></div>
+                <div class="cert-img-card reveal-scale reveal-delay-2"><img src="clouder (4).jpg" alt="Clouder认证 4" loading="lazy"><span class="cert-label">Clouder</span></div>
+                <div class="cert-img-card reveal-scale reveal-delay-2"><img src="clouder (5).jpg" alt="Clouder认证 5" loading="lazy"><span class="cert-label">Clouder</span></div>
+                <div class="cert-img-card reveal-scale reveal-delay-3"><img src="clouder (6).jpg" alt="Clouder认证 6" loading="lazy"><span class="cert-label">Clouder</span></div>
+                <div class="cert-img-card reveal-scale reveal-delay-3"><img src="clouder (7).jpg" alt="Clouder认证 7" loading="lazy"><span class="cert-label">Clouder</span></div>
+                <div class="cert-img-card reveal-scale reveal-delay-3"><img src="clouder (8).jpg" alt="Clouder认证 8" loading="lazy"><span class="cert-label">Clouder</span></div>
+                <div class="cert-img-card reveal-scale reveal-delay-4"><img src="clouder (9).jpg" alt="Clouder认证 9" loading="lazy"><span class="cert-label">Clouder</span></div>
+                <div class="cert-img-card reveal-scale reveal-delay-4"><img src="cj.jpg" alt="人工智能训练师初级" loading="lazy"><span class="cert-label">人工智能训练师</span></div>
+                <div class="cert-img-card reveal-scale reveal-delay-4"><img src="gj.jpg" alt="人工智能训练师高级" loading="lazy"><span class="cert-label">人工智能训练师</span></div>
+            </div>
+        </section>
+
+        <section class="section" id="evaluation">
+            <h2 class="section-title reveal-left"><span class="title-accent"></span>自我评价</h2>
+            <p class="section-subtitle reveal-left reveal-delay-1">技术热情 · 自驱力 · 职业目标</p>
+            <div class="eval-block reveal reveal-delay-2">
+                <ul class="eval-list">
+                    <li><strong>🚀 超前的技术视野与自驱力</strong>自主规划并系统完成云计算与AI领域的专业技术认证，展现出远超同龄人的技术热情与目标执行力</li>
+                    <li><strong>📊 扎实的AI数据工程基础</strong>持有国家认证的AI训练师高级工证书，具备从数据采集、标注到模型训练评估的全流程实操能力</li>
+                    <li><strong>☁️ 全面的阿里云技术栈</strong>通过阿里云Clouder全系列认证，对云计算核心产品有体系化认知，可胜任云运维、技术支持等岗位</li>
+                    <li><strong>🎯 强执行力与结果导向</strong>独立制定学习计划并100%完成全部认证考核，证明具备优秀的自我管理能力与持续学习韧性</li>
+                    <li><strong>🧭 职业目标清晰</strong>希望进入互联网/AI行业，从技术基础岗位做起，逐步成长为云计算工程师或AI数据工程专家</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer class="site-footer">
+        <p>© 2026 郭娜 · 个人简历 | 更新于 2026年7月</p>
+        <p>📱 15759379240 ｜ ✉️ <span id="footerEmail">364110851@qq.com</span> ｜ 🌐 阿里云认证主页：【待补】</p>
+    </footer>
+
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img src="" alt="证书放大图" id="lightboxImg">
+    </div>
+
+    <script>
+        (function() {
+            // 粒子背景
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const pCount = 55;
+            const connDist = 105;
+            function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = document.documentElement.scrollHeight; }
+            function createParticles() {
+                particles = [];
+                for (let i = 0; i < pCount; i++) particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.28, vy: (Math.random() - 0.5) * 0.28, radius: Math.random() * 1.6 + 0.5, alpha: Math.random() * 0.45 + 0.18 });
+            }
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const pc = '167,139,250';
+                for (let p of particles) {
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+                    ctx.fillStyle = `rgba(${pc},${p.alpha})`; ctx.fill();
+                    for (let j = particles.indexOf(p) + 1; j < particles.length; j++) {
+                        let p2 = particles[j], dx = p.x - p2.x, dy = p.y - p2.y, dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < connDist) {
+                            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y);
+                            ctx.strokeStyle = `rgba(${pc},${0.06*(1-dist/connDist)})`; ctx.lineWidth = 0.55; ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(drawParticles);
+            }
+            resizeCanvas(); createParticles(); drawParticles();
+            window.addEventListener('resize', () => { resizeCanvas(); createParticles(); });
+            window.addEventListener('scroll', () => { if (Math.abs(canvas.height - document.documentElement.scrollHeight) > 100) canvas.height = document.documentElement.scrollHeight; }, { passive: true });
+
+            // 滚动进度与导航阴影
+            const scrollProgress = document.getElementById('scrollProgress');
+            const navBar = document.getElementById('navBar');
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                let st = window.scrollY, dh = document.documentElement.scrollHeight - window.innerHeight;
+                scrollProgress.style.width = Math.min((st/dh)*100, 100) + '%';
+                navBar.classList.toggle('scrolled', st > 20);
+                backToTop.classList.toggle('visible', st > window.innerHeight*0.5);
+            });
+            backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+            // 滚动渐显动画
+            const revealObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('revealed');
+                    else entry.target.classList.remove('revealed');
+                });
+            }, { rootMargin: '0px 0px -80px 0px', threshold: 0.1 });
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-scale').forEach(el => revealObserver.observe(el));
+            setTimeout(() => {
+                document.querySelectorAll('.reveal, .reveal-left, .reveal-scale').forEach(el => {
+                    if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('revealed');
+                });
+            }, 200);
+
+            // 邮箱复制
+            const fullEmail = '364110851@qq.com';
+            document.getElementById('footerEmail').textContent = fullEmail;
+            document.getElementById('copyEmailBtn').addEventListener('click', () => {
+                navigator.clipboard.writeText(fullEmail).then(() => alert('邮箱已复制：' + fullEmail)).catch(() => alert('手动复制：' + fullEmail));
+            });
+
+            // 打字机效果
+            const roles = ['云计算技术学习者', 'AI数据工程实践者', '阿里云Clouder全系列认证持有者', '人工智能训练师 · 高级工'];
+            let ri = 0, ci = 0, del = false;
+            const typeText = document.createTextNode('');
+            document.getElementById('heroRole').insertBefore(typeText, document.getElementById('typingCursor'));
+            function typeLoop() {
+                let cur = roles[ri]; del ? ci-- : ci++; let ts = del ? 30 : 60;
+                typeText.textContent = cur.substring(0, ci);
+                if (!del && ci === cur.length) { ts = 1500; del = true; }
+                else if (del && ci === 0) { del = false; ri = (ri+1)%roles.length; ts = 300; }
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(typeLoop, ts);
+                else typeText.textContent = roles[0];
+            }
+            setTimeout(typeLoop, 400);
+
+            // Tabs
+            function initTabs(cont) {
+                let tabs = cont.querySelectorAll('[role="tab"]');
+                let panels = cont.querySelectorAll('[role="tabpanel"]');
+                let indicator = cont.querySelector('.tab-indicator');
+                let tabArr = Array.from(tabs);
+                function updateInd(tab) {
+                    if (!indicator) return;
+                    let tr = tab.getBoundingClientRect(), cr = cont.getBoundingClientRect();
+                    indicator.style.left = (tr.left - cr.left + cont.scrollLeft) + 'px';
+                    indicator.style.width = tr.width + 'px';
+                }
+                function activate(tab) {
+                    tabArr.forEach(t => { t.setAttribute('aria-selected', 'false'); t.setAttribute('tabindex', '-1'); });
+                    tab.setAttribute('aria-selected', 'true'); tab.setAttribute('tabindex', '0');
+                    panels.forEach(p => p.setAttribute('aria-hidden', 'true'));
+                    let panel = document.getElementById(tab.getAttribute('aria-controls'));
+                    if (panel) panel.setAttribute('aria-hidden', 'false');
+                    updateInd(tab);
+                }
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => activate(tab));
+                    tab.addEventListener('keydown', e => {
+                        let idx = tabArr.indexOf(tab), next = idx;
+                        if (e.key === 'ArrowRight') next = (idx+1)%tabArr.length;
+                        else if (e.key === 'ArrowLeft') next = (idx-1+tabArr.length)%tabArr.length;
+                        else if (e.key === 'Home') next = 0;
+                        else if (e.key === 'End') next = tabArr.length-1;
+                        if (next !== idx) { e.preventDefault(); activate(tabArr[next]); }
+                    });
+                });
+                let at = cont.querySelector('[role="tab"][aria-selected="true"]');
+                if (at && indicator) setTimeout(() => updateInd(at), 150);
+                window.addEventListener('resize', () => { let a = cont.querySelector('[role="tab"][aria-selected="true"]'); if (a && indicator) updateInd(a); });
+            }
+            document.querySelectorAll('.tabs-container').forEach(c => initTabs(c));
+
+            // 技能条动画
+            let skillObs = new IntersectionObserver(entries => {
+                entries.forEach(en => { if (en.isIntersecting) { en.target.style.width = en.target.getAttribute('data-width') + '%'; skillObs.unobserve(en.target); } });
+            }, { threshold: 0.3 });
+            document.querySelectorAll('.skill-bar-fill[data-width]').forEach(b => skillObs.observe(b));
+
+            // 数字递增
+            let countObs = new IntersectionObserver(entries => {
+                entries.forEach(en => {
+                    if (en.isIntersecting) {
+                        let el = en.target, target = parseInt(el.getAttribute('data-target'));
+                        if (isNaN(target)) return;
+                        let suffix = el.textContent.replace(/[\d]/g, '').trim(), dur = 1500, st = performance.now();
+                        function upd(ts) { let p = Math.min((ts-st)/dur, 1); el.textContent = Math.round(target*(1-Math.pow(1-p,3))) + (suffix||''); if (p<1) requestAnimationFrame(upd); else el.textContent = target + (suffix||''); }
+                        requestAnimationFrame(upd); countObs.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.4 });
+            document.querySelectorAll('.hl-number[data-target]').forEach(el => countObs.observe(el));
+
+            // 平滑滚动
+            function smoothScrollTo(target) { if(!target) return; const top = target.getBoundingClientRect().top + window.pageYOffset - navBar.offsetHeight - 22; window.scrollTo({ top, behavior: 'smooth' }); }
+            document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); smoothScrollTo(document.getElementById(a.getAttribute('href').substring(1))); }));
+            document.querySelectorAll('.scroll-to-btn[href^="#"]').forEach(btn => btn.addEventListener('click', e => { e.preventDefault(); smoothScrollTo(document.getElementById(btn.getAttribute('href').substring(1))); }));
+
+            // 打印
+            document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+            // Lightbox
+            const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightboxImg'), lightboxClose = document.getElementById('lightboxClose');
+            document.querySelectorAll('.cert-img-card img').forEach(img => {
+                img.addEventListener('click', function() { lightboxImg.src = this.src; lightbox.classList.add('active'); });
+            });
+            lightboxClose.addEventListener('click', () => lightbox.classList.remove('active'));
+            lightbox.addEventListener('click', function(e) { if (e.target === lightbox) lightbox.classList.remove('active'); });
+            document.addEventListener('keydown', e => { if (e.key === 'Escape' && lightbox.classList.contains('active')) lightbox.classList.remove('active'); });
+
+            // 卡片光晕鼠标跟随
+            document.querySelectorAll('.highlight-card, .project-card').forEach(c => {
+                c.addEventListener('mousemove', e => { let r = c.getBoundingClientRect(); c.style.setProperty('--mx', ((e.clientX - r.left) / r.width)*100 + '%'); c.style.setProperty('--my', ((e.clientY - r.top) / r.height)*100 + '%'); });
+                c.addEventListener('mouseleave', () => { c.style.setProperty('--mx', '50%'); c.style.setProperty('--my', '50%'); });
+            });
+        })();
+    </script>
+</body>
+</html>
